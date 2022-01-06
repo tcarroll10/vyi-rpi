@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="vyiSqlMap" class="java.util.HashMap" scope="singleton">
+		<constructor-arg>
+			<map>
+				<entry key="getTeam">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								 SELECT 
+								 	ID_TEAM,
+								 	NAME_TEAM
+								 FROM
+								    VYI_RPI.TEAM 
+								   			
+					]]>
+					</value>
+				</entry>
+				
+				<entry key="getSpecificTeam">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								 SELECT 
+								 	ID_TEAM,
+								 	NAME_TEAM
+								 FROM
+								    VYI_RPI.TEAM 
+								 WHERE   
+								     ID_TEAM = :teamID
+								   			
+					]]>
+					</value>
+				</entry>
+				
+				  
+				
+				
+				
+				
+				
+				<entry key="getGamesPlayed">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								 SELECT 
+								 	COUNT(*)
+								 FROM
+								    VYI_RPI.RSLT
+								 WHERE id_home = :teamID or id_away = :teamID
+						
+					]]>
+					</value>
+				</entry>
+				
+				
+				
+				<entry key="getGamesWon">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								 SELECT 
+								 	COUNT(*)
+								 FROM
+								    VYI_RPI.RSLT
+								 WHERE id_winner = :teamID
+						
+					]]>
+					</value>
+				</entry>
+				
+				<entry key="getOpponents">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								    SELECT 
+										ID_HOME as ID_TEAM, NAME_TEAM
+									FROM 
+										VYI_RPI.RSLT A
+									JOIN
+										VYI_RPI.TEAM B on A.ID_HOME = B.ID_TEAM
+									WHERE 
+										ID_HOME = :teamID or ID_AWAY = :teamID
+									UNION
+									 SELECT 
+										ID_AWAY as ID_TEAM, NAME_TEAM
+									FROM 
+										VYI_RPI.RSLT A
+									JOIN
+										VYI_RPI.TEAM B on A.ID_AWAY = B.ID_TEAM
+									WHERE 
+										ID_HOME = :teamID or ID_AWAY = :teamID
+									
+				
+					]]>
+					</value>
+				</entry>
+				
+				
+				
+				
+
+				
+				
+				
+				<entry key="insertRequestAudit">
+					<value> <![CDATA[
+					INSERT INTO UPS_API_EVNT(
+					   ID_API_EVNT,
+					   ID_UUID_RCVD,
+					   CD_SRCE_SYST_RCVD,
+					   DTTM_RQST_RCVD,
+					   CD_RSPNS_STS_SENT,
+					   TXT_RSPNS_MSG_SENT,
+					   DTTM_RSPNS_SENT,
+					   VAL_FILE_CNTNT_RCVD
+				    )
+					values(
+				      :idApiEvnt,
+					  :uuid,
+					  :cdSrceSystem,
+					  :dtRqstRcvd,
+					  :cdRspnsSent,
+					  :txtRspnsMsgSent,
+					  :dtRspnsSent,
+					  :fileContent
+					)
+					]]>
+					</value>
+				</entry>
+				
+				<entry key="findMaxAuditId">
+					<value> <![CDATA[
+					SELECT MAX(ID_API_EVNT) ID_API_EVNT
+                    FROM UPS_API_EVNT
+					]]>
+					</value>
+				</entry>
+				
+			</map>
+		</constructor-arg>
+	</bean>
+	
+</beans>
