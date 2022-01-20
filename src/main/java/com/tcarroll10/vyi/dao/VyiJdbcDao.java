@@ -40,9 +40,24 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 	public List<Team> getTeam() {
 		final String sql = findSqlById("getTeam");
 
-		return getNamedParameterJdbcTemplate().query(sql, (rs, rowNum) -> Team.builder().teamId(rs.getInt("ID_TEAM"))
-				.teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM"))).build());
+		return getNamedParameterJdbcTemplate().query(sql,
+				(rs, rowNum) -> Team.builder().teamId(rs.getInt("ID_TEAM"))
+						.teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM")))
+						.division(StringUtils.trimWhitespace(rs.getString("NAME_DIVISION"))).build());
 
+	}
+
+	@Override
+	public List<Team> getTeamsByDivision(String division) {
+
+		final String sql = findSqlById("getTeamsByDivision");
+		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("division", division);
+
+		return getNamedParameterJdbcTemplate().query(sql, paramSource,
+				(rs, rowNum) -> Team.builder().teamId(rs.getInt("ID_TEAM"))
+						.teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM")))
+						.division(StringUtils.trimWhitespace(rs.getString("NAME_DIVISION"))).build());
 	}
 
 	@Override
@@ -51,8 +66,10 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("teamID", teamId);
 
-		return getNamedParameterJdbcTemplate().queryForObject(sql, paramSource, (rs, rowNum) -> Team.builder()
-				.teamId(rs.getInt("ID_TEAM")).teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM"))).build());
+		return getNamedParameterJdbcTemplate().queryForObject(sql, paramSource,
+				(rs, rowNum) -> Team.builder().teamId(rs.getInt("ID_TEAM"))
+						.teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM")))
+						.division(StringUtils.trimWhitespace(rs.getString("NAME_DIVISION"))).build());
 
 	}
 

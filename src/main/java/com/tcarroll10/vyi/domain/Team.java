@@ -8,10 +8,12 @@ public class Team {
 
 	private final Integer teamId;
 	private String teamName;
+	private String division;
 
 	private Team(Builder builder) {
 		this.teamId = builder.teamId;
 		this.teamName = builder.teamName;
+		this.division = builder.division;
 	}
 
 	/**
@@ -41,6 +43,7 @@ public class Team {
 	public static final class Builder {
 		private Integer teamId;
 		private String teamName;
+		private String division;
 
 		private Builder() {
 		}
@@ -48,6 +51,7 @@ public class Team {
 		private Builder(Team team) {
 			this.teamId = team.teamId;
 			this.teamName = team.teamName;
+			this.division = team.division;
 		}
 
 		public Builder teamId(Integer teamId) {
@@ -60,9 +64,19 @@ public class Team {
 			return this;
 		}
 
+		public Builder division(String division) {
+			this.division = division;
+			return this;
+		}
+
 		public Team build() {
 			return new Team(this);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Team [teamId=" + teamId + ", teamName=" + teamName + ", division=" + division + "]";
 	}
 
 	public Integer getTeamId() {
@@ -73,15 +87,15 @@ public class Team {
 		return teamName;
 	}
 
-	@Override
-	public String toString() {
-		return "Team [teamId=" + teamId + ", teamName=" + teamName + "]";
+	public String getDivision() {
+		return division;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((division == null) ? 0 : division.hashCode());
 		result = prime * result + ((teamId == null) ? 0 : teamId.hashCode());
 		result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
 		return result;
@@ -96,6 +110,11 @@ public class Team {
 		if (getClass() != obj.getClass())
 			return false;
 		Team other = (Team) obj;
+		if (division == null) {
+			if (other.division != null)
+				return false;
+		} else if (!division.equals(other.division))
+			return false;
 		if (teamId == null) {
 			if (other.teamId != null)
 				return false;

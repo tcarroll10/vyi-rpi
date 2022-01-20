@@ -18,6 +18,8 @@ public interface VyiService {
 
 	public Team getSpecificTeam(Integer teamId);
 
+	public List<Team> getTeamsByDivision(String division);
+
 	public Double getGamesPlayed(Integer teamID);
 
 	public Double getGamesWon(Integer teamID);

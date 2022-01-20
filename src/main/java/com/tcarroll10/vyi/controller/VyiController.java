@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tcarroll10.vyi.service.VyiService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class VyiController {
 
 	private static Logger LOG = (Logger) LoggerFactory.getLogger(VyiController.class);
@@ -30,6 +33,12 @@ public class VyiController {
 	public ResponseEntity<?> getTeam() {
 		LOG.info("getTeam called");
 		return new ResponseEntity<>(vyiService.getTeam(), HttpStatus.OK);
+	}
+
+	@GetMapping("/teams/{division}")
+	public ResponseEntity<?> getTeamsByDivision(@PathVariable String division) {
+		LOG.info("getTeamsByDivision for {} called", division);
+		return new ResponseEntity<>(vyiService.getTeamsByDivision(division), HttpStatus.OK);
 	}
 
 	@PostMapping("/team")

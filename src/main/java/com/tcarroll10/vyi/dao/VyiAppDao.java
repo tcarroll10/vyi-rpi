@@ -16,6 +16,8 @@ public interface VyiAppDao {
 
 	public List<Team> getTeam();
 
+	public List<Team> getTeamsByDivision(String division);
+
 	public Team getSpecificTeam(Integer teamId);
 
 	public Double numberOfGamesPlayed(Integer teamId);

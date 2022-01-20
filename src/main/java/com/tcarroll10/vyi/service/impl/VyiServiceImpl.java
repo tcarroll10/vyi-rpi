@@ -50,6 +50,11 @@ public class VyiServiceImpl implements VyiService {
 
 	}
 
+	public List<Team> getTeamsByDivision(String division) {
+
+		return vyiAppDao.getTeamsByDivision(division);
+	}
+
 	public Team getSpecificTeam(Integer teamId) {
 
 		return vyiAppDao.getSpecificTeam(teamId);

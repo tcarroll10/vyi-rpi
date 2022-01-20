@@ -14,7 +14,8 @@
 			 		
 								 SELECT 
 								 	ID_TEAM,
-								 	NAME_TEAM
+								 	NAME_TEAM,
+								 	NAME_DIVISION
 								 FROM
 								    VYI_RPI.TEAM 
 								   			
@@ -22,13 +23,30 @@
 					</value>
 				</entry>
 				
+				<entry key="getTeamsByDivision">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								 SELECT 
+								 	ID_TEAM,
+								 	NAME_TEAM,
+								 	NAME_DIVISION
+								 FROM
+								    VYI_RPI.TEAM 
+								  WHERE   
+								    NAME_DIVISION = :division		
+					]]>
+					</value>
+				</entry>
+
 				<entry key="getSpecificTeam">
 					<value>
 			 		<![CDATA[			 		
 			 		
 								 SELECT 
 								 	ID_TEAM,
-								 	NAME_TEAM
+								 	NAME_TEAM,
+								 	NAME_DIVISION
 								 FROM
 								    VYI_RPI.TEAM 
 								 WHERE   
@@ -37,14 +55,7 @@
 					]]>
 					</value>
 				</entry>
-				
-				  
-				
-				
-				
-				
-				
-				<entry key="getGamesPlayed">
+		<entry key="getGamesPlayed">
 					<value>
 			 		<![CDATA[			 		
 			 		
@@ -57,9 +68,9 @@
 					]]>
 					</value>
 				</entry>
-				
-				
-				
+
+
+
 				<entry key="getGamesWon">
 					<value>
 			 		<![CDATA[			 		
@@ -73,7 +84,7 @@
 					]]>
 					</value>
 				</entry>
-				
+
 				<entry key="getOpponents">
 					<value>
 			 		<![CDATA[			 		
@@ -100,50 +111,10 @@
 					]]>
 					</value>
 				</entry>
-				
-				
-				
-				
 
-				
-				
-				
-				<entry key="insertRequestAudit">
-					<value> <![CDATA[
-					INSERT INTO UPS_API_EVNT(
-					   ID_API_EVNT,
-					   ID_UUID_RCVD,
-					   CD_SRCE_SYST_RCVD,
-					   DTTM_RQST_RCVD,
-					   CD_RSPNS_STS_SENT,
-					   TXT_RSPNS_MSG_SENT,
-					   DTTM_RSPNS_SENT,
-					   VAL_FILE_CNTNT_RCVD
-				    )
-					values(
-				      :idApiEvnt,
-					  :uuid,
-					  :cdSrceSystem,
-					  :dtRqstRcvd,
-					  :cdRspnsSent,
-					  :txtRspnsMsgSent,
-					  :dtRspnsSent,
-					  :fileContent
-					)
-					]]>
-					</value>
-				</entry>
-				
-				<entry key="findMaxAuditId">
-					<value> <![CDATA[
-					SELECT MAX(ID_API_EVNT) ID_API_EVNT
-                    FROM UPS_API_EVNT
-					]]>
-					</value>
-				</entry>
-				
+
 			</map>
 		</constructor-arg>
 	</bean>
-	
+
 </beans>
