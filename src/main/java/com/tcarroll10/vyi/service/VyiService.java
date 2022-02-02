@@ -2,6 +2,7 @@ package com.tcarroll10.vyi.service;
 
 import java.util.List;
 
+import com.tcarroll10.vyi.domain.Game;
 import com.tcarroll10.vyi.domain.Rslt;
 import com.tcarroll10.vyi.domain.Team;
 
@@ -15,6 +16,8 @@ import com.tcarroll10.vyi.domain.Team;
 public interface VyiService {
 
 	public List<Team> getTeam();
+
+	public void addGameRslt(Game game);
 
 	public Team getSpecificTeam(Integer teamId);
 
@@ -39,5 +42,7 @@ public interface VyiService {
 	public Double getRpi(Integer teamId);
 
 	public List<Rslt> calcRpiOnly();
+
+	public List<Rslt> calcRsltsForDivision(String team);
 
 }

@@ -2,6 +2,7 @@ package com.tcarroll10.vyi.dao;
 
 import java.util.List;
 
+import com.tcarroll10.vyi.domain.Game;
 import com.tcarroll10.vyi.domain.Team;
 
 /**
@@ -25,5 +26,7 @@ public interface VyiAppDao {
 	public Double numberOfGamesWon(Integer teamId);
 
 	public List<Team> getOpponents(Integer teamId);
+
+	public void addGameRslt(Game game);
 
 }

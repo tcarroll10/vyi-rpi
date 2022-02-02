@@ -111,6 +111,21 @@
 					]]>
 					</value>
 				</entry>
+				
+				<entry key="insertGameRslt">
+					<value>
+			 		<![CDATA[			 		
+			 		
+			 		
+			 		INSERT INTO 
+			 			VYI_RPI.RSLT
+			 		 		(dt_game, num_seq, id_home, id_away, id_winner, amt_pts_home_team, amt_pts_away_team) 
+			 			VALUES 
+			 				(:gameDt, :seqNum, :homeId, :awayId, :winnerId, :amtPtsHome, :amtPtsAway)
+		
+					]]>
+					</value>
+				</entry>
 
 
 			</map>

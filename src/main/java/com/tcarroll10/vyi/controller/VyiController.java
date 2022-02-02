@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tcarroll10.vyi.domain.Game;
 import com.tcarroll10.vyi.service.VyiService;
 
 @RestController
@@ -95,16 +96,28 @@ public class VyiController {
 		return new ResponseEntity<>(vyiService.getRpi(input), HttpStatus.OK);
 	}
 
+	@GetMapping("/justRpi")
+	public ResponseEntity<?> justRpi() {
+		LOG.info("get Results called");
+		return new ResponseEntity<>(vyiService.calcRpiOnly(), HttpStatus.OK);
+	}
+
 	@GetMapping("/results")
 	public ResponseEntity<?> getRslts() {
 		LOG.info("get Results called");
 		return new ResponseEntity<>(vyiService.calcRslts(), HttpStatus.OK);
 	}
 
-	@GetMapping("/justRpi")
-	public ResponseEntity<?> justRpi() {
-		LOG.info("get Results called");
-		return new ResponseEntity<>(vyiService.calcRpiOnly(), HttpStatus.OK);
+	@GetMapping("/results/{division}")
+	public ResponseEntity<?> getRsltsByDivision(@PathVariable String division) {
+		LOG.info("get Results called for {} Division", division);
+		return new ResponseEntity<>(vyiService.calcRsltsForDivision(division), HttpStatus.OK);
+	}
+
+	@PostMapping("/addGame")
+	public void addGameRsult(@RequestBody Game game) {
+		LOG.info("Game for {} entered", game.getGameDt());
+		vyiService.addGameRslt(game);
 	}
 
 }

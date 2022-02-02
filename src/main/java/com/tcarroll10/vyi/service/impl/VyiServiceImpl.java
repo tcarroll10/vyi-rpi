@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.tcarroll10.vyi.dao.VyiAppDao;
+import com.tcarroll10.vyi.domain.Game;
 import com.tcarroll10.vyi.domain.Rslt;
 import com.tcarroll10.vyi.domain.Team;
 import com.tcarroll10.vyi.service.VyiService;
@@ -48,6 +49,11 @@ public class VyiServiceImpl implements VyiService {
 
 		return vyiAppDao.getTeam();
 
+	}
+
+	public void addGameRslt(Game game) {
+
+		vyiAppDao.addGameRslt(game);
 	}
 
 	public List<Team> getTeamsByDivision(String division) {
@@ -150,6 +156,20 @@ public class VyiServiceImpl implements VyiService {
 	public List<Rslt> calcRslts() {
 
 		return this.getTeam().stream()
+				.map(e -> Rslt.builder().teamId(e.getTeamId()).teamName(e.getTeamName())
+						.gamesPlayed(this.getGamesPlayed(e.getTeamId())).gamesWon(this.getGamesWon(e.getTeamId()))
+						.winRate(this.getWinRate(e.getTeamId())).oppnts(this.getOpponents(e.getTeamId()))
+						.oppntsAvgWinRate(this.getOpponentsAvgWinRate(e.getTeamId()))
+						.oppntsOfOppnts(this.getOpponentsOfOpponents(e.getTeamId()))
+						.oppntsOfOppntsAvgWinRate(this.getOpponentsOfOpponentsAvgWinRate(e.getTeamId()))
+						.rpi(this.getRpi(e.getTeamId())).build())
+				.collect(toList());
+
+	}
+
+	public List<Rslt> calcRsltsForDivision(String division) {
+
+		return this.getTeamsByDivision(division).stream()
 				.map(e -> Rslt.builder().teamId(e.getTeamId()).teamName(e.getTeamName())
 						.gamesPlayed(this.getGamesPlayed(e.getTeamId())).gamesWon(this.getGamesWon(e.getTeamId()))
 						.winRate(this.getWinRate(e.getTeamId())).oppnts(this.getOpponents(e.getTeamId()))

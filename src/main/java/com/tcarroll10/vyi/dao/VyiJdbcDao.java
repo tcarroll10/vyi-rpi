@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.tcarroll10.vyi.domain.Game;
 import com.tcarroll10.vyi.domain.Team;
 
 /**
@@ -99,6 +100,20 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 		return getNamedParameterJdbcTemplate().query(sql, paramSource, (rs, rowNum) -> Team.builder()
 				.teamId(rs.getInt("ID_TEAM")).teamName(StringUtils.trimWhitespace(rs.getString("NAME_TEAM"))).build());
 
+	}
+
+	public void addGameRslt(Game game) {
+		final String sql = findSqlById("insertGameRslt");
+		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("gameDt", game.getGameDt());
+		paramSource.addValue("seqNum", game.getSeqNum());
+		paramSource.addValue("homeId", game.getHomeId());
+		paramSource.addValue("awayId", game.getAwayId());
+		paramSource.addValue("winnerId", game.getWinnerId());
+		paramSource.addValue("amtPtsHome", game.getAmtPtsHome());
+		paramSource.addValue("amtPtsAway", game.getAmtPtsAway());
+
+		getNamedParameterJdbcTemplate().update(sql, paramSource);
 	}
 
 }
