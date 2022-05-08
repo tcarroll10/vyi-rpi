@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = Game.Builder.class)
 public class Game {
 
+	private Integer id;
 	private Date gameDt;
-	private Integer seqNum;
 	private Integer homeId;
 	private Integer awayId;
 	private Integer winnerId;
@@ -17,8 +17,8 @@ public class Game {
 	private Integer amtPtsAway;
 
 	private Game(Builder builder) {
+		this.id = builder.id;
 		this.gameDt = builder.gameDt;
-		this.seqNum = builder.seqNum;
 		this.homeId = builder.homeId;
 		this.awayId = builder.awayId;
 		this.winnerId = builder.winnerId;
@@ -51,8 +51,8 @@ public class Game {
 	 */
 	@JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
 	public static final class Builder {
+		private Integer id;
 		private Date gameDt;
-		private Integer seqNum;
 		private Integer homeId;
 		private Integer awayId;
 		private Integer winnerId;
@@ -63,8 +63,8 @@ public class Game {
 		}
 
 		private Builder(Game game) {
+			this.id = game.id;
 			this.gameDt = game.gameDt;
-			this.seqNum = game.seqNum;
 			this.homeId = game.homeId;
 			this.awayId = game.awayId;
 			this.winnerId = game.winnerId;
@@ -72,13 +72,13 @@ public class Game {
 			this.amtPtsAway = game.amtPtsAway;
 		}
 
-		public Builder gameDt(Date gameDt) {
-			this.gameDt = gameDt;
+		public Builder id(Integer id) {
+			this.id = id;
 			return this;
 		}
 
-		public Builder seqNum(Integer seqNum) {
-			this.seqNum = seqNum;
+		public Builder gameDt(Date gameDt) {
+			this.gameDt = gameDt;
 			return this;
 		}
 
@@ -112,12 +112,12 @@ public class Game {
 		}
 	}
 
-	public Date getGameDt() {
-		return gameDt;
+	public Integer getId() {
+		return id;
 	}
 
-	public Integer getSeqNum() {
-		return seqNum;
+	public Date getGameDt() {
+		return gameDt;
 	}
 
 	public Integer getHomeId() {
@@ -142,69 +142,8 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [gameDt=" + gameDt + ", seqNum=" + seqNum + ", homeId=" + homeId + ", awayId=" + awayId
-				+ ", winnerId=" + winnerId + ", amtPtsHome=" + amtPtsHome + ", amtPtsAway=" + amtPtsAway + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((amtPtsAway == null) ? 0 : amtPtsAway.hashCode());
-		result = prime * result + ((amtPtsHome == null) ? 0 : amtPtsHome.hashCode());
-		result = prime * result + ((awayId == null) ? 0 : awayId.hashCode());
-		result = prime * result + ((gameDt == null) ? 0 : gameDt.hashCode());
-		result = prime * result + ((homeId == null) ? 0 : homeId.hashCode());
-		result = prime * result + ((seqNum == null) ? 0 : seqNum.hashCode());
-		result = prime * result + ((winnerId == null) ? 0 : winnerId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Game other = (Game) obj;
-		if (amtPtsAway == null) {
-			if (other.amtPtsAway != null)
-				return false;
-		} else if (!amtPtsAway.equals(other.amtPtsAway))
-			return false;
-		if (amtPtsHome == null) {
-			if (other.amtPtsHome != null)
-				return false;
-		} else if (!amtPtsHome.equals(other.amtPtsHome))
-			return false;
-		if (awayId == null) {
-			if (other.awayId != null)
-				return false;
-		} else if (!awayId.equals(other.awayId))
-			return false;
-		if (gameDt == null) {
-			if (other.gameDt != null)
-				return false;
-		} else if (!gameDt.equals(other.gameDt))
-			return false;
-		if (homeId == null) {
-			if (other.homeId != null)
-				return false;
-		} else if (!homeId.equals(other.homeId))
-			return false;
-		if (seqNum == null) {
-			if (other.seqNum != null)
-				return false;
-		} else if (!seqNum.equals(other.seqNum))
-			return false;
-		if (winnerId == null) {
-			if (other.winnerId != null)
-				return false;
-		} else if (!winnerId.equals(other.winnerId))
-			return false;
-		return true;
+		return "Game [id=" + id + ", gameDt=" + gameDt + ", homeId=" + homeId + ", awayId=" + awayId + ", winnerId="
+				+ winnerId + ", amtPtsHome=" + amtPtsHome + ", amtPtsAway=" + amtPtsAway + "]";
 	}
 
 }

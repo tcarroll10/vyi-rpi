@@ -51,9 +51,19 @@ public class VyiServiceImpl implements VyiService {
 
 	}
 
+	public List<Game> getGames() {
+
+		return vyiAppDao.getGames();
+	}
+
 	public void addGameRslt(Game game) {
 
 		vyiAppDao.addGameRslt(game);
+	}
+
+	public void updateGame(Game game) {
+
+		vyiAppDao.updateGame(game);
 	}
 
 	public List<Team> getTeamsByDivision(String division) {
@@ -185,6 +195,16 @@ public class VyiServiceImpl implements VyiService {
 
 		return this.getTeam().stream().map(e -> Rslt.builder().teamId(e.getTeamId()).teamName(e.getTeamName())
 				.rpi(this.getRpi(e.getTeamId())).build()).collect(toList());
+	}
+
+	public Game getGame(Integer id) {
+		return vyiAppDao.getGame(id);
+
+	}
+
+	public void deleteGame(Integer id) {
+		vyiAppDao.deleteGame(id);
+
 	}
 
 }

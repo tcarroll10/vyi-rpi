@@ -49,6 +49,18 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 	}
 
 	@Override
+	public List<Game> getGames() {
+
+		final String sql = findSqlById("getGames");
+
+		return getNamedParameterJdbcTemplate().query(sql,
+				(rs, rowNum) -> Game.builder().id(rs.getInt("ID")).gameDt(rs.getDate("DT_GAME"))
+						.homeId(rs.getInt("ID_HOME")).awayId(rs.getInt("ID_AWAY")).winnerId(rs.getInt("ID_WINNER"))
+						.amtPtsHome(rs.getInt("amt_pts_home_team")).amtPtsAway(rs.getInt("amt_pts_away_team")).build());
+
+	}
+
+	@Override
 	public List<Team> getTeamsByDivision(String division) {
 
 		final String sql = findSqlById("getTeamsByDivision");
@@ -103,10 +115,9 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 	}
 
 	public void addGameRslt(Game game) {
-		final String sql = findSqlById("insertGameRslt");
+		final String sql = findSqlById("insertGame");
 		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("gameDt", game.getGameDt());
-		paramSource.addValue("seqNum", game.getSeqNum());
 		paramSource.addValue("homeId", game.getHomeId());
 		paramSource.addValue("awayId", game.getAwayId());
 		paramSource.addValue("winnerId", game.getWinnerId());
@@ -114,6 +125,42 @@ public class VyiJdbcDao extends AbstractJdbcDao implements VyiAppDao {
 		paramSource.addValue("amtPtsAway", game.getAmtPtsAway());
 
 		getNamedParameterJdbcTemplate().update(sql, paramSource);
+	}
+
+	public void updateGame(Game game) {
+
+		final String sql = findSqlById("updateGame");
+		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", game.getId());
+		paramSource.addValue("gameDt", game.getGameDt());
+		paramSource.addValue("homeId", game.getHomeId());
+		paramSource.addValue("awayId", game.getAwayId());
+		paramSource.addValue("winnerId", game.getWinnerId());
+		paramSource.addValue("amtPtsHome", game.getAmtPtsHome());
+		paramSource.addValue("amtPtsAway", game.getAmtPtsAway());
+
+		getNamedParameterJdbcTemplate().update(sql, paramSource);
+
+	}
+
+	public Game getGame(Integer id) {
+		final String sql = findSqlById("getGame");
+		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", id);
+
+		return getNamedParameterJdbcTemplate().queryForObject(sql, paramSource,
+				(rs, rowNum) -> Game.builder().id(rs.getInt("id")).gameDt(rs.getDate("DT_GAME"))
+						.homeId(rs.getInt("id_home")).awayId(rs.getInt("id_away")).winnerId(rs.getInt("id_winner"))
+						.amtPtsHome(rs.getInt("amt_pts_home_team")).amtPtsAway(rs.getInt("amt_pts_away_team")).build());
+
+	}
+
+	public void deleteGame(Integer id) {
+		final String sql = findSqlById("deleteGame");
+		final MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", id);
+		getNamedParameterJdbcTemplate().update(sql, paramSource);
+
 	}
 
 }

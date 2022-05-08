@@ -29,4 +29,12 @@ public interface VyiAppDao {
 
 	public void addGameRslt(Game game);
 
+	public List<Game> getGames();
+
+	public Game getGame(Integer id);
+
+	public void deleteGame(Integer id);
+
+	public void updateGame(Game game);
+
 }

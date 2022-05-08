@@ -17,6 +17,8 @@ public interface VyiService {
 
 	public List<Team> getTeam();
 
+	public List<Game> getGames();
+
 	public void addGameRslt(Game game);
 
 	public Team getSpecificTeam(Integer teamId);
@@ -44,5 +46,11 @@ public interface VyiService {
 	public List<Rslt> calcRpiOnly();
 
 	public List<Rslt> calcRsltsForDivision(String team);
+
+	public Game getGame(Integer id);
+
+	public void deleteGame(Integer id);
+
+	public void updateGame(Game game);
 
 }

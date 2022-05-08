@@ -62,7 +62,7 @@
 								 SELECT 
 								 	COUNT(*)
 								 FROM
-								    VYI_RPI.RSLT
+								    VYI_RPI.GAME
 								 WHERE id_home = :teamID or id_away = :teamID
 						
 					]]>
@@ -78,7 +78,7 @@
 								 SELECT 
 								 	COUNT(*)
 								 FROM
-								    VYI_RPI.RSLT
+								    VYI_RPI.GAME
 								 WHERE id_winner = :teamID
 						
 					]]>
@@ -92,7 +92,7 @@
 								    SELECT 
 										ID_HOME as ID_TEAM, NAME_TEAM
 									FROM 
-										VYI_RPI.RSLT A
+										VYI_RPI.GAME A
 									JOIN
 										VYI_RPI.TEAM B on A.ID_HOME = B.ID_TEAM
 									WHERE 
@@ -101,7 +101,7 @@
 									 SELECT 
 										ID_AWAY as ID_TEAM, NAME_TEAM
 									FROM 
-										VYI_RPI.RSLT A
+										VYI_RPI.GAME A
 									JOIN
 										VYI_RPI.TEAM B on A.ID_AWAY = B.ID_TEAM
 									WHERE 
@@ -112,20 +112,87 @@
 					</value>
 				</entry>
 				
-				<entry key="insertGameRslt">
+				<entry key="getGame">
+					<value>
+			 		<![CDATA[			 		
+			 		
+								   SELECT 
+    									id,
+									    dt_game,
+									    id_home,
+									    id_away,
+									    id_winner,
+									    amt_pts_home_team,
+									    amt_pts_away_team
+										FROM
+										    VYI_RPI.GAME
+										WHERE
+										    id = :id
+				
+					]]>
+					</value>
+				</entry>
+				
+				<entry key="insertGame">
 					<value>
 			 		<![CDATA[			 		
 			 		
 			 		
 			 		INSERT INTO 
-			 			VYI_RPI.RSLT
-			 		 		(dt_game, num_seq, id_home, id_away, id_winner, amt_pts_home_team, amt_pts_away_team) 
+			 			VYI_RPI.GAME
+			 		 		(dt_game, id_home, id_away, id_winner, amt_pts_home_team, amt_pts_away_team) 
 			 			VALUES 
-			 				(:gameDt, :seqNum, :homeId, :awayId, :winnerId, :amtPtsHome, :amtPtsAway)
+			 				(:gameDt, :homeId, :awayId, :winnerId, :amtPtsHome, :amtPtsAway)
 		
 					]]>
 					</value>
 				</entry>
+				
+				<entry key="updateGame">
+					<value>
+			 		<![CDATA[			 		
+			 		
+			 		
+			 		UPDATE VYI_RPI.GAME
+			 		SET dt_game = :gameDt, id_home = :homeId, id_away = :awayId,
+			 		id_winner = :winnerId, amt_pts_home_team = :amtPtsHome, amt_pts_away_team = :amtPtsAway
+			 		WHERE id = :id;
+			 		
+		
+					]]>
+					</value>
+				</entry>
+				
+
+				
+				<entry key="getGames">
+					<value>
+			 		<![CDATA[			 		
+			 		
+			 		 SELECT 
+			 		 	ID, DT_GAME, ID_HOME, ID_AWAY, ID_WINNER, amt_pts_home_team,amt_pts_away_team
+					FROM 
+						VYI_RPI.GAME
+			 	
+			 		
+					]]>
+					</value>
+				</entry>
+
+
+				<entry key="deleteGame">
+					<value>
+			 		<![CDATA[			 		
+			 		
+			 		DELETE FROM vyi_rpi.game WHERE id = :id
+			 	
+					]]>
+					</value>
+				</entry>
+
+
+
+
 
 
 			</map>

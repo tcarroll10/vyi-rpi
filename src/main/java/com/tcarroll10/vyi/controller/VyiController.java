@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +36,12 @@ public class VyiController {
 	public ResponseEntity<?> getTeam() {
 		LOG.info("getTeam called");
 		return new ResponseEntity<>(vyiService.getTeam(), HttpStatus.OK);
+	}
+
+	@GetMapping("/games")
+	public ResponseEntity<?> getGames() {
+		LOG.info("getGames called");
+		return new ResponseEntity<>(vyiService.getGames(), HttpStatus.OK);
 	}
 
 	@GetMapping("/teams/{division}")
@@ -118,6 +126,26 @@ public class VyiController {
 	public void addGameRsult(@RequestBody Game game) {
 		LOG.info("Game for {} entered", game.getGameDt());
 		vyiService.addGameRslt(game);
+	}
+
+	@GetMapping("/game/{id}")
+	public ResponseEntity<?> getGame(@PathVariable Integer id) {
+		LOG.info("getGame for {} called", id);
+		return new ResponseEntity<>(vyiService.getGame(id), HttpStatus.OK);
+
+	}
+
+	@DeleteMapping(value = "/deleteGame/{id}")
+	public void deleteGame(@PathVariable Integer id) {
+		LOG.info("deleteGame called for game {}", id);
+		vyiService.deleteGame(id);
+	}
+
+	@PutMapping(value = "/updateGame")
+	public void updateGame(@RequestBody Game game) {
+		LOG.info("Game {} updated", game.getId());
+		vyiService.updateGame(game);
+
 	}
 
 }
